@@ -2,6 +2,46 @@
 title: "My Research"
 ---
 
+**I study the use of health information technology and its role in improving care quality.**
+
+[My research](files/nca_research_statement.pdf) is situated at the intersection of health services research, health policy, and health informatics.
 
 
-# Peer Reviewed Journal Articles
+## Peer Reviewed Publications
+
+
+**Apathy, NC**; Hare, AJ; Fendrich, S; Cross DA. Early Changes in Billing and Notes after the Evaluation and Management Guideline Change. *Annals of Internal Medicine.* 2022;175(2).
+
+**Apathy, NC**; Holmgren, AJ; Werner, RM. Growth in health information exchange with ACO market penetration. *American Journal of Managed Care.* 2022;28(1).
+
+Werner, RM; Templeton, Z; **Apathy, NC**; Skira, MM; Konetzka, RT. Trends in post-acute care in US nursing homes: 2001 to 2017. *Journal of the American Medical Directors Association.* 2021;22(12).
+
+**Apathy, NC**; Holmgren, AJ; Adler-Milstein, J. A Decade Post-HITECH: Critical Access Hospitals have EHRs but Struggle to Keep Up with Other Advanced Functions. *Journal of the American Medical Informatics Association.* 2021;28(9).
+
+**Apathy, NC**; Vest, JR; Adler-Milstein, J; Blackburn, J; Harle, CA. Practice and market factors associated with provider volume of health information exchange. Journal of the American Medical Informatics Association. 2021 March.
+
+Baxter, SL; **Apathy, NC**; Cross, DA; Sinsky, C; Hribar, ME. Measures of electronic health record use in outpatient settings across vendors. *Journal of the American Medical Informatics Association.* 2020 Nov.
+
+Taylor, HL; **Apathy, NC**; Vest, JR. Health information exchange use during dental visits. *AMIA Annual Symposium Proceedings.* 2020 Nov. Student Paper Competition Finalist
+
+**Apathy, NC**; Everson, J. High rates of partial participation in the first year of the Merit-Based Incentive Program. *Health Affairs.* 2020 Sept.
+
+**Apathy, NC**; Harle, CA; Vest, JR; Morea, JG; Menachemi, N. Use of Electronic Health Records on Days Off: Comparing Physicians to Other EHR Users. *Journal of General Internal Medicine.* 2020 Aug.
+
+Holmgren, AJ; **Apathy, NC**; Adler-Milstein, J. Barriers to Hospital Public Health Reporting and Implications for the COVID-19 Pandemic. *Journal of the American Medical Informatics Association.* 2020 May.
+
+Holmgren, AJ; **Apathy, NC**. Evaluation of Prescription Drug Monitoring Program Integration With Hospital Electronic Health Records by US County-Level Opioid Prescribing Rates. *JAMA Network Open.* 2020 Jun 1;3(6).
+
+**Apathy, NC**; Holmgren, AJ. Opt-in consent policies: potential barriers to hospital health information exchange. *American Journal of Managed Care.* 2020;26(1).
+
+Holmgren, AJ; **Apathy, NC**. Hospital adoption of API-enabled patient data access. *Healthcare: The Journal of Delivery Science and Innovation.* 2019;8.
+
+Balio, CP; **Apathy, NC**; Danek, R. Health information technology and accountable care organizations: synthesis of the literature and future directions. *eGEMs (Generating Evidence & Methods to improve patient outcomes).* 2019;7(1):24.
+
+**Apathy, NC**; Yeager, VA. Examining training motivations among public health workers. *Journal of Public Health Management and Practice.* 2019 Vol 25 Special Supplement 2. PH WINS 2017.
+
+Harle, CA; **Apathy, NC**; Cook, RL; Danielson, EC; DiIulio, J; Downs, SM; Hurley, RW; Mamlin, BW; Militello, LG; Anders, S. Information Needs and Requirements for Decision Support in Primary Care: An Analysis of Chronic Pain Care. *AMIA Annual Symposium Proceedings.* 2018 Nov 3-7.
+
+**Apathy, NC**; Menser, T; Keeran, L; Ford, EW; Harle, CA; Huerta, TR. Trends and gaps in awareness of direct-to-consumer genetic tests from 2007-2014. *American Journal of Preventive Medicine.* 2018 Jun 1;54(6):806-13.
+
+Mosa, AS; Yoo, I; **Apathy, NC**; Ko, KJ; Parker, JC. Secondary Use of Clinical Data to Enable Data-Driven Translational Science with Trustworthy Access Management. *Missouri Medicine.* 2015;112(6):443-448.
