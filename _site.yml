@@ -1,0 +1,29 @@
+name: "Nate C. Apathy"
+output_dir: "."
+navbar:
+  title: "Nate C. Apathy, PhD"
+  type: inverse
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "About"
+      icon: fa-user 
+      href: about.html
+    - text: "CV"
+      icon: fa-file-pdf-o
+      href: cv.html
+    - text: "Web Apps"
+      icon: chart-bar
+      href: https://nateapathy.github.io/  
+  right:
+    - text: "Contact me"
+      icon: fa-envelope-o
+      href: mailto:nate.apathy@pennmedicine.upenn.edu
+    - text: "GitHub"
+      icon: fa-github
+      href: https://github.com/nateapathy
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
