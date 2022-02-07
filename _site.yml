@@ -1,5 +1,5 @@
 name: "Nate C. Apathy"
-output_dir: "."
+output_dir: "docs"
 navbar:
   title: "Nate C. Apathy, PhD"
   type: inverse
@@ -14,8 +14,8 @@ navbar:
       icon: fa-file-pdf-o
       href: cv.html
     - text: "Web Apps"
-      icon: chart-bar
-      href: https://nateapathy.github.io/  
+      icon: fa-chart-bar
+      href: web_apps.html
   right:
     - text: "Contact me"
       icon: fa-envelope-o
