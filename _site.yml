@@ -7,23 +7,20 @@ navbar:
     - text: "Home"
       icon: fa-home
       href: index.html
-    - text: "About"
-      icon: fa-user 
-      href: about.html
     - text: "CV"
       icon: fa-file-pdf-o
-      href: NateApathy_CV.pdf
+      href: files/NateApathy_CV.pdf
+    - text: "Research"
+      icon: fa-user
+      href: research.html
     - text: "Web Apps"
       icon: fa-chart-bar
       href: web_apps.html
-  right:
-    - text: "Contact me"
+    - text: "Contact"
       icon: fa-envelope-o
       href: mailto:nate.apathy@pennmedicine.upenn.edu
-    - text: "GitHub"
-      icon: fa-github
-      href: https://github.com/nateapathy
+
 output:
   html_document:
-    theme: cosmo
+    theme: yeti
     highlight: textmate

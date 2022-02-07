@@ -1,5 +1,29 @@
 ---
-title: "Nate C Apathy's Website"
+title: "Welcome!"
 ---
 
-Test Index File!
+:::: {style="display: flex;"}
+
+::: {img-panel}
+
+![](files/apathy-nate.jpg){width=95%}
+
+:::
+
+::: {text-panel}
+
+I'm a postdoctoral fellow in health services research at the Perelman School of Medicine and an associate fellow at the [Leonard Davis Institute of Health Economics](https://ldi.upenn.edu/fellows/fellows-directory/nate-c-apathy-phd/) at the University of Pennsylvania. I'm also an Affiliated Research Scientist at the [Regenstrief Institute](https://www.regenstrief.org/) in Indianapolis, Indiana. I hold a PhD in Health Policy & Management from the Richard M. Fairbanks School of Public Health at Indiana University.
+
+My research sits at the intersection of health services research, health policy, and health informatics. I study the role of health information technology in support of delivery and payment reform efforts; the impact of regulations on innovation, adoption, and use; and the use of system-generated log data to increase understanding of health IT's impact on care quality. You can find my published work in *Health Affairs*, the *American Journal of Managed Care*, *Journal of General Internal Medicine*, the *Journal of the American Medical Informatics Association*, *Healthcare*, and *JAMA Network Open*.
+
+:::
+
+::::
+
+
+
+# Recent Publications
+
+- **Annals of Internal Medicine**
+
+- **American Journal of Managed Care**
