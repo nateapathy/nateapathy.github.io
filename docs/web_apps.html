@@ -11,7 +11,7 @@
 
 
 
-<title>Web Apps</title>
+<title>Web Applications</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -220,6 +223,75 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
 
 </head>
 
@@ -227,6 +299,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -265,6 +347,13 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
+  <a href="materials.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Blog &amp; Teaching
+  </a>
+</li>
+<li>
   <a href="web_apps.html">
     <span class="fa fa-chart-bar"></span>
      
@@ -290,18 +379,33 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Web Apps</h1>
+<h1 class="title toc-ignore">Web Applications</h1>
 
 </div>
 
 
-<div id="header" class="section level2">
-<h2>Header</h2>
-<p>Summary of Web Apps</p>
+<div id="wordle" class="section level2">
+<h2>woRdle</h2>
+<p><code>in development</code></p>
+</div>
+<div id="economics-seminar-speaker-diversity" class="section level2">
+<h2>Economics Seminar Speaker Diversity</h2>
+<p><img src="files/econ-seminars.png" /></p>
+<p>Jennifer Doleac (Texas A&amp;M) and Elizabeth Pancotti along with a team of undergraduate assistants have collected years of historical data on invited speakers for economics department seminars at universities across the US. Invited seminars serve an important role in academic economists’ career trajectories, so they wanted to better understand the racial and gender composition of seminar speakers in aggregate, within specific departments, and within specific seminar series (e.g. labor economics or health economics). We collaborated to build an <a href="https://econseminardiversity.shinyapps.io/EconSeminarDiversity/">R Shiny Dashboard for visualizing trends of women speakers and under-represented minorities</a>. You can even compare universities and specific lecture series over time! More data is being added regularly, so keep checking in on this important project.</p>
+</div>
+<div id="opioid-prescribing-rate-visualizations" class="section level2">
+<h2>Opioid Prescribing Rate Visualizations</h2>
+<p><img src="files/opioid-rx.png" /> In 2018, the Centers for Disease Control and Prevention released data on <a href="https://www.cdc.gov/drugoverdose/maps/rxrate-maps.html">opioid prescribing rates</a> at the county and state levels for 2006 through 2016. <a href="https://fsph.iupui.edu/about/directory/wiley-kevin.html">Kevin Wiley</a> and I developed a <a href="https://natea.shinyapps.io/opioid_rx_rate/">Shiny app</a> to visualize changes in prescribing rates over time. This app expands on the CDC data by allowing users to define regions and time frames for comparison. For more information, see this blog post.</p>
+</div>
+<div id="chf-risk-prediction-tool-demo" class="section level2">
+<h2>CHF Risk Prediction Tool (Demo)</h2>
+<p><img src="files/chf-risk.png" /> Working with a team of collaborators from the Regenstrief Institute, we constructed a random forest risk prediction model for congestive heart failure (CHF). We then built an <a href="https://natea.shinyapps.io/rf_plot_app/">application</a>, leveraging RShiny and ggplot2, to visualize both population-level risk prediction (left) and the factors influencing individual patients’ risk predictions (right). This allows users to see not only an overall risk prediction but also the unique factors driving each patient’s predicted risk. The “individual patient” plot on the right dynamically updates when the user clicks on any point in the “population” plot on the left.</p>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -334,6 +438,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
