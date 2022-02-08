@@ -92,7 +92,7 @@ for (i in c(1:length(fmls))) {
                         data=dat)
 }
 
-etable(results)
+etable(results[1:4])
 # now all 9 regressions get done!
 ```
 
@@ -110,7 +110,8 @@ plotdat <- list()
 for (i in c(1:length(results))) {
   plotdat[[i]] <- coefplot(results[[i]])$prms %>%
     data.frame() %>%
-    mutate(oc=as.character(results[[i]]$fml)[2])
+    mutate(oc=as.character(results[[i]]$fml)[2],
+           model=i)
 }
 
 ```
@@ -118,12 +119,16 @@ for (i in c(1:length(results))) {
 ```{r forest-plot}
 
 bind_rows(plotdat) %>% 
-  filter(estimate_names!="(Intercept)") %>%
+  filter(estimate_names!="(Intercept)" &
+           oc=="y3") %>%
   ggplot() +
   geom_pointrange(aes(x=estimate,y=estimate_names,
-                      xmin=ci_low,xmax=ci_high),
-                  position = position_dodge(width = 1)) +
-  facet_wrap(~oc) +
+                      xmin=ci_low,xmax=ci_high,
+                      color=factor(model)),
+                  position = position_dodge(width = 1),
+                  show.legend = F) +
+  facet_wrap(~oc+model) +
+  labs(y="Covariate",title="Forest Plot, 3 models (outcome y3)") +
   theme_bw()
 
 ```
