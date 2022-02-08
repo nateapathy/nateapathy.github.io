@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Looping Regressions</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Nate C. Apathy, PhD</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="files/NateApathy_CV.pdf">
+    <span class="fa fa-file-pdf-o"></span>
+     
+    CV
+  </a>
+</li>
+<li>
+  <a href="research.html">
+    <span class="fa fa-user"></span>
+     
+    Research
+  </a>
+</li>
+<li>
+  <a href="materials.html">
+    <span class="fa fa-chalkboard-teacher"></span>
+     
+    Presentations
+  </a>
+</li>
+<li>
+  <a href="web_apps.html">
+    <span class="fa fa-chart-bar"></span>
+     
+    Web Apps
+  </a>
+</li>
+<li>
+  <a href="mailto:nate.apathy@pennmedicine.upenn.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Looping Regressions</h1>
+
+</div>
+
+
+<p>There are a lot of research applications for looping regressions. Very rarely does a research project consist of running a single regression and calling it a day. Sometimes this means looping through different outcome variables, other times you need to loop through sets of independent variables. This dummy script provides syntax for building these loops using the <code>fixest</code> package.</p>
+<pre class="r"><code>library(fixest)
+library(tidyverse)</code></pre>
+<p>Now that we have our packages loaded, we’ll build a dummy dataset for our regressions. <code>y</code> variables are outcomes; <code>x</code> variables are independent variables.</p>
+<pre class="r"><code># build the dummy dataset
+data.frame(x1=rnorm(100),
+           x2=sample(c(1:10000),100),
+           x3=rep(c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;),25)) %&gt;%
+  mutate(y1=(x1*3)+(x2*1.1),
+         y2=(x1*5)+(x2*0.5),
+         y3=runif(100)) -&gt; dat</code></pre>
+<div id="multiple-outcomes-same-independent-variables" class="section level2">
+<h2>Multiple Outcomes, same independent variables</h2>
+<p>This is useful when you are conducting <strong>multivariate</strong> regression, which occurs when you’re looking at the relationship of one variable with multiple outcomes. For example, the relationship of patient portal use with emergency department visits, primary care provider visits, and total costs.</p>
+<pre class="r"><code>## multiple outcome variables, same RHS (indep vars)
+# first, create a vector with the characters of all of your outcome variables
+oc_vars &lt;- c(&quot;y1&quot;,&quot;y2&quot;,&quot;y3&quot;)
+
+results &lt;- list() # create an empty list to append via the loop
+
+for (i in c(1:length(oc_vars))) {
+  results[[i]] &lt;- feols(fml=formula(paste0(oc_vars[i],&quot;~x1+x2+x3&quot;)),
+                        se = &quot;hetero&quot;,
+                        data=dat)
+}
+
+# now we can just pass the results list to etable and get the models side by side
+etable(results)</code></pre>
+<pre><code>##                                model 1                 model 2            model 3
+## Dependent Var.:                     y1                      y2                 y3
+##                                                                                  
+## (Intercept)     6.37e-12*** (1.63e-12)     9.09e-13 (6.87e-13) 0.5784*** (0.0856)
+## x1                 3.000*** (6.37e-13)     5.000*** (3.23e-13)    0.0197 (0.0287)
+## x2                 1.100*** (2.47e-16)    0.5000*** (1.12e-16)  -2.4e-6 (1.09e-5)
+## x3B             4.55e-12*** (1.33e-12)     4.55e-13 (3.45e-13)  -0.1676* (0.0739)
+## x3C                1.82e-12 (1.15e-12)   -1.82e-12** (6.6e-13)   -0.1065 (0.0768)
+## x3D             -5.46e-12** (1.87e-12) -3.64e-12*** (1.02e-12)   -0.1385 (0.0856)
+## _______________ ______________________ _______________________ __________________
+## S.E. type       Heteroskedastici.-rob. Heteroskedasticity-rob. Heteroskedas.-rob.
+## Observations                       100                     100                100
+## R2                                   1                       1            0.05470
+## Adj. R2                              1                       1            0.00442</code></pre>
+<pre class="r"><code># we can also extract the estimates one by one
+results[[1]] %&gt;% summary()</code></pre>
+<pre><code>## OLS estimation, Dep. Var.: y1
+## Observations: 100 
+## Standard-errors: Heteroskedasticity-robust 
+##              Estimate Std. Error       t value Pr(&gt;|t|))    
+## (Intercept)  6.37e-12   1.63e-12  3.902800e+00  0.000179 ***
+## x1           3.00e+00   6.37e-13  4.708603e+12 &lt; 2.2e-16 ***
+## x2           1.10e+00   2.47e-16  4.459057e+15 &lt; 2.2e-16 ***
+## x3B          4.55e-12   1.33e-12  3.425200e+00  0.000912 ***
+## x3C          1.82e-12   1.15e-12  1.580700e+00  0.117299    
+## x3D         -5.46e-12   1.87e-12 -2.913600e+00  0.004465 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## RMSE: 5.427e-12   Adj. R2: 1</code></pre>
+<pre class="r"><code>results[[1]]$coeftable</code></pre>
+<pre><code>##                  Estimate   Std. Error       t value    Pr(&gt;|t|))
+## (Intercept)  6.366463e-12 1.631235e-12  3.902849e+00 0.0001786682
+## x1           3.000000e+00 6.371317e-13  4.708603e+12 0.0000000000
+## x2           1.100000e+00 2.466890e-16  4.459057e+15 0.0000000000
+## x3B          4.547474e-12 1.327651e-12  3.425202e+00 0.0009123303
+## x3C          1.818989e-12 1.150728e-12  1.580729e+00 0.1172992636
+## x3D         -5.456968e-12 1.872945e-12 -2.913576e+00 0.0044647021
+## attr(,&quot;type&quot;)
+## [1] &quot;Heteroskedasticity-robust&quot;</code></pre>
+<pre class="r"><code>coef(results[[1]])</code></pre>
+<pre><code>##   (Intercept)            x1            x2           x3B           x3C           x3D 
+##  6.366463e-12  3.000000e+00  1.100000e+00  4.547474e-12  1.818989e-12 -5.456968e-12</code></pre>
+</div>
+<div id="one-outcome-multiple-sets-of-independent-variables" class="section level2">
+<h2>One outcome, multiple sets of independent variables</h2>
+<p>This is useful when you are conducting <strong>multivariable</strong> regression, which occurs when you’re looking at the relationship of multiple variables with the same outcome. For example, the relationship of adopting different types of technology (EHR, HIE, patient portals) on hospital costs.</p>
+<pre class="r"><code>## one outcome, multiple right-hand sides
+# I like to create a data frame with my formulas in it
+oc_vars &lt;- &quot;y1&quot; # reset to a single outcome variable
+# expand.grid creates all possible combos of the vectors given
+expand.grid(oc=oc_vars,rhs=c(&quot;x1&quot;,&quot;x1+x2&quot;,&quot;x1+x2+x3&quot;)) %&gt;%
+  mutate(fml=paste0(oc,&quot;~&quot;,rhs)) %&gt;% pull(fml) -&gt; fmls
+# now we have a little vector of formulas stored as character elements
+results &lt;- list() # another empty list
+
+# now instead of looping through oc_vars, we loop through fmls with the outcome constant
+for (i in c(1:length(fmls))) {
+  results[[i]] &lt;- feols(fml=formula(fmls[i]),
+                        se=&quot;hetero&quot;,
+                        data=dat)
+}
+
+etable(results)</code></pre>
+<pre><code>##                            model 1                model 2                model 3
+## Dependent Var.:                 y1                     y1                     y1
+##                                                                                 
+## (Intercept)     6,229.8*** (300.0) 7.28e-12*** (1.16e-12) 6.37e-12*** (1.63e-12)
+## x1                   46.54 (317.6)    3.000*** (4.02e-13)    3.000*** (6.37e-13)
+## x2                                    1.100*** (1.89e-16)    1.100*** (2.47e-16)
+## x3B                                                       4.55e-12*** (1.33e-12)
+## x3C                                                          1.82e-12 (1.15e-12)
+## x3D                                                       -5.46e-12** (1.87e-12)
+## _______________ __________________ ______________________ ______________________
+## S.E. type       Heteroskedas.-rob. Heteroskedastici.-rob. Heteroskedastici.-rob.
+## Observations                   100                    100                    100
+## R2                         0.00025                      1                      1
+## Adj. R2                   -0.00995                      1                      1</code></pre>
+</div>
+<div id="varying-both" class="section level2">
+<h2>Varying both!</h2>
+<pre class="r"><code>## now vary both
+## one outcome, multiple right-hand sides
+# I like to create a data frame with my formulas in it
+oc_vars &lt;- c(&quot;y1&quot;,&quot;y2&quot;,&quot;y3&quot;) # reset to outcome variables
+# expand.grid creates all possible combos of the vectors given
+expand.grid(oc=oc_vars,rhs=c(&quot;x1&quot;,&quot;x1+x2&quot;,&quot;x1+x2+x3&quot;)) %&gt;%
+  mutate(fml=paste0(oc,&quot;~&quot;,rhs)) %&gt;% pull(fml) -&gt; fmls
+# now this is 9 instead of 3, since it&#39;s 3 RHS by 3 outcomes, so 9 total formulas
+results &lt;- list() # another empty list
+
+# loop through formulas exactly like we did in the last step
+for (i in c(1:length(fmls))) {
+  results[[i]] &lt;- feols(fml=formula(fmls[i]),
+                        se=&quot;hetero&quot;,
+                        data=dat)
+}
+
+etable(results)</code></pre>
+<pre><code>##                            model 1            model 2            model 3                model 4
+## Dependent Var.:                 y1                 y2                 y3                     y1
+##                                                                                                
+## (Intercept)     6,229.8*** (300.0) 2,831.7*** (136.4) 0.4618*** (0.0281) 7.28e-12*** (1.16e-12)
+## x1                   46.54 (317.6)      24.79 (144.4)    0.0158 (0.0283)    3.000*** (4.02e-13)
+## x2                                                                          1.100*** (1.89e-16)
+## x3B                                                                                            
+## x3C                                                                                            
+## x3D                                                                                            
+## _______________ __________________ __________________ __________________ ______________________
+## S.E. type       Heteroskedas.-rob. Heteroskedas.-rob. Heteroskedas.-rob. Heteroskedastici.-rob.
+## Observations                   100                100                100                    100
+## R2                         0.00025            0.00034            0.00329                      1
+## Adj. R2                   -0.00995           -0.00986           -0.00688                      1
+##                                model 5            model 6                model 7                 model 8
+## Dependent Var.:                     y2                 y3                     y1                      y2
+##                                                                                                         
+## (Intercept)     1.82e-12*** (3.09e-13) 0.4627*** (0.0670) 6.37e-12*** (1.63e-12)     9.09e-13 (6.87e-13)
+## x1                 5.000*** (1.42e-13)    0.0158 (0.0285)    3.000*** (6.37e-13)     5.000*** (3.23e-13)
+## x2                0.5000*** (6.41e-17)  -1.53e-7 (1.1e-5)    1.100*** (2.47e-16)    0.5000*** (1.12e-16)
+## x3B                                                       4.55e-12*** (1.33e-12)     4.55e-13 (3.45e-13)
+## x3C                                                          1.82e-12 (1.15e-12)   -1.82e-12** (6.6e-13)
+## x3D                                                       -5.46e-12** (1.87e-12) -3.64e-12*** (1.02e-12)
+## _______________ ______________________ __________________ ______________________ _______________________
+## S.E. type       Heteroskedastici.-rob. Heteroskedas.-rob. Heteroskedastici.-rob. Heteroskedasticity-rob.
+## Observations                       100                100                    100                     100
+## R2                                   1            0.00329                      1                       1
+## Adj. R2                              1           -0.01726                      1                       1
+##                            model 9
+## Dependent Var.:                 y3
+##                                   
+## (Intercept)     0.5784*** (0.0856)
+## x1                 0.0197 (0.0287)
+## x2               -2.4e-6 (1.09e-5)
+## x3B              -0.1676* (0.0739)
+## x3C               -0.1065 (0.0768)
+## x3D               -0.1385 (0.0856)
+## _______________ __________________
+## S.E. type       Heteroskedas.-rob.
+## Observations                   100
+## R2                         0.05470
+## Adj. R2                    0.00442</code></pre>
+<pre class="r"><code># now all 9 regressions get done!</code></pre>
+</div>
+<div id="bonus-forest-plotting" class="section level2">
+<h2>Bonus: Forest Plotting!</h2>
+<p>I love visualizing regression results with forest plots, but that can be difficult using out-of-the-box regression plotting. Luckily, <code>fixest</code> gives us an easy option to pull out both estimates and 95% confidence intervals from multiple models, so we can graph things all at once.</p>
+<p>The <code>prms</code> output from <code>feols</code> objects include all of the parameters for a forest plot.</p>
+<pre class="r"><code># create empty list for plot data
+plotdat &lt;- list()  
+
+for (i in c(1:length(results))) {
+  plotdat[[i]] &lt;- coefplot(results[[i]])$prms %&gt;%
+    data.frame() %&gt;%
+    mutate(oc=as.character(results[[i]]$fml)[2])
+}</code></pre>
+<pre class="r"><code>bind_rows(plotdat) %&gt;% 
+  filter(estimate_names!=&quot;(Intercept)&quot;) %&gt;%
+  ggplot() +
+  geom_pointrange(aes(x=estimate,y=estimate_names,
+                      xmin=ci_low,xmax=ci_high),
+                  position = position_dodge(width = 1)) +
+  facet_wrap(~oc) +
+  theme_bw()</code></pre>
+<p><img src="looping-reg_files/figure-html/forest-plot-1.png" width="672" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

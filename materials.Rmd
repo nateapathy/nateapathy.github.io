@@ -1,6 +1,25 @@
 ---
-title: "Blogs & Instructional Materials"
+title: "Instructional Materials"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true 
 ---
 
-# 3 columns
+This page contains materials from tutorial sessions, visualization examples, and links to research talk decks.
 
+## Research Presentations & Invited Talks
+
+- Jan 21 2022: [Documentation Dynamics: Notes, Burden, and Physician Efficiency](https://ucsf.app.box.com/s/rkkvcyanewbm81ffrrivt4ak4ez1cndw/file/909031854228)
+  - Presentation to [National Research Network for EHR Audit Log Data](https://cliir.ucsf.edu/portfolio/national-research-network-ehr-audit-log-data)
+
+## Tutorial Materials
+
+- [Looping Regressions with `fixest`](looping-reg.html)
+- [R for Health Services Research](https://github.com/nateapathy/hsR)
+
+## Visualization Examples
+
+- [TriIndy Results](tri-indy.html)

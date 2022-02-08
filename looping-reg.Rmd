@@ -1,0 +1,131 @@
+---
+title: "Looping Regressions"
+---
+
+There are a lot of research applications for looping regressions. Very rarely does a research project consist of running a single regression and calling it a day. Sometimes this means looping through different outcome variables, other times you need to loop through sets of independent variables. This dummy script provides syntax for building these loops using the `fixest` package.
+
+```{r load-packages,message=FALSE,warning=FALSE}
+library(fixest)
+library(tidyverse)
+```
+
+Now that we have our packages loaded, we'll build a dummy dataset for our regressions. `y` variables are outcomes; `x` variables are independent variables.
+
+```{r dummy-dat}
+# build the dummy dataset
+data.frame(x1=rnorm(100),
+           x2=sample(c(1:10000),100),
+           x3=rep(c("A","B","C","D"),25)) %>%
+  mutate(y1=(x1*3)+(x2*1.1),
+         y2=(x1*5)+(x2*0.5),
+         y3=runif(100)) -> dat
+```
+
+## Multiple Outcomes, same independent variables
+
+This is useful when you are conducting **multivariate** regression, which occurs when you're looking at the relationship of one variable with multiple outcomes. For example, the relationship of patient portal use with emergency department visits, primary care provider visits, and total costs.
+
+
+```{r mult-oc}
+## multiple outcome variables, same RHS (indep vars)
+# first, create a vector with the characters of all of your outcome variables
+oc_vars <- c("y1","y2","y3")
+
+results <- list() # create an empty list to append via the loop
+
+for (i in c(1:length(oc_vars))) {
+  results[[i]] <- feols(fml=formula(paste0(oc_vars[i],"~x1+x2+x3")),
+                        se = "hetero",
+                        data=dat)
+}
+
+# now we can just pass the results list to etable and get the models side by side
+etable(results)
+
+# we can also extract the estimates one by one
+results[[1]] %>% summary()
+results[[1]]$coeftable
+coef(results[[1]])
+```
+
+## One outcome, multiple sets of independent variables
+
+This is useful when you are conducting **multivariable** regression, which occurs when you're looking at the relationship of multiple variables with the same outcome. For example, the relationship of adopting different types of technology (EHR, HIE, patient portals) on hospital costs.
+
+```{r mult-rhs}
+## one outcome, multiple right-hand sides
+# I like to create a data frame with my formulas in it
+oc_vars <- "y1" # reset to a single outcome variable
+# expand.grid creates all possible combos of the vectors given
+expand.grid(oc=oc_vars,rhs=c("x1","x1+x2","x1+x2+x3")) %>%
+  mutate(fml=paste0(oc,"~",rhs)) %>% pull(fml) -> fmls
+# now we have a little vector of formulas stored as character elements
+results <- list() # another empty list
+
+# now instead of looping through oc_vars, we loop through fmls with the outcome constant
+for (i in c(1:length(fmls))) {
+  results[[i]] <- feols(fml=formula(fmls[i]),
+                        se="hetero",
+                        data=dat)
+}
+
+etable(results)
+```
+
+## Varying both!
+
+```{r vary-both}
+## now vary both
+## one outcome, multiple right-hand sides
+# I like to create a data frame with my formulas in it
+oc_vars <- c("y1","y2","y3") # reset to outcome variables
+# expand.grid creates all possible combos of the vectors given
+expand.grid(oc=oc_vars,rhs=c("x1","x1+x2","x1+x2+x3")) %>%
+  mutate(fml=paste0(oc,"~",rhs)) %>% pull(fml) -> fmls
+# now this is 9 instead of 3, since it's 3 RHS by 3 outcomes, so 9 total formulas
+results <- list() # another empty list
+
+# loop through formulas exactly like we did in the last step
+for (i in c(1:length(fmls))) {
+  results[[i]] <- feols(fml=formula(fmls[i]),
+                        se="hetero",
+                        data=dat)
+}
+
+etable(results)
+# now all 9 regressions get done!
+```
+
+
+## Bonus: Forest Plotting!
+
+I love visualizing regression results with forest plots, but that can be difficult using out-of-the-box regression plotting. Luckily, `fixest` gives us an easy option to pull out both estimates and 95% confidence intervals from multiple models, so we can graph things all at once.
+
+The `prms` output from `feols` objects include all of the parameters for a forest plot.
+
+```{r plot, fig.show='hide'}
+# create empty list for plot data
+plotdat <- list()  
+
+for (i in c(1:length(results))) {
+  plotdat[[i]] <- coefplot(results[[i]])$prms %>%
+    data.frame() %>%
+    mutate(oc=as.character(results[[i]]$fml)[2])
+}
+
+```
+
+```{r forest-plot}
+
+bind_rows(plotdat) %>% 
+  filter(estimate_names!="(Intercept)") %>%
+  ggplot() +
+  geom_pointrange(aes(x=estimate,y=estimate_names,
+                      xmin=ci_low,xmax=ci_high),
+                  position = position_dodge(width = 1)) +
+  facet_wrap(~oc) +
+  theme_bw()
+
+```
+
+

@@ -13,7 +13,7 @@ navbar:
     - text: "Research"
       icon: fa-user
       href: research.html
-    - text: "Blog & Teaching"
+    - text: "Presentations"
       icon: fa-chalkboard-teacher
       href: materials.html
     - text: "Web Apps"
